@@ -10,109 +10,151 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Rajdhani', sans-serif;
         }
 
-        /* 2. Body Styling: Screen ke bilkul center mein box ko lane ke liye Flexbox */
         body {
-            background: linear-gradient(135deg, #1e1e2f, #2a2a40); /* Soft Dark Gradient Background */
-            height: 100vh;                                        /* Full Screen Height */
-            display: flex;                                         /* Flexbox ON */
-            justify-content: center;                               /* Horizontally Center */
-            align-items: center;                                  /* Vertically Center */
+            background: #080c14; /* Deep Tech Dark */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.1) 0%, transparent 70%),
+                linear-gradient(rgba(0, 242, 254, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 254, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px; /* Tech Grid Effect */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        /* 3. Main Container Box: Professional Login Card */
-        .login-card {
-            background-color: #ffffff;             /* Box ka background white */
-            padding: 40px 30px;                    /* andar se jagah (Top/Bottom 40px, Left/Right 30px) */
-            width: 360px;                          /* Box ki fixed width */
-            border-radius: 12px;                   /* Box ke corners gol (curved) karne ke liye */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Premium Shadow effect */
-            text-align: center;                    /* Sub text center mein rahega */
+        /* 2. Main Robotics Interface HUD Box */
+        .robotics-card {
+            background: rgba(10, 25, 47, 0.75);
+            border: 2px solid #00f2fe;
+            padding: 35px 30px;
+            width: 380px;
+            border-radius: 4px;
+            /* Cut Corner Tech Look */
+            clip-path: polygon(
+                0 15px, 15px 0, 
+                calc(100% - 15px) 0, 100% 15px, 
+                100% calc(100% - 15px), calc(100% - 15px) 100%, 
+                15px 100%, 0 calc(100% - 15px)
+            );
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.3), inset 0 0 15px rgba(0, 242, 254, 0.15);
+            text-align: center;
+            position: relative;
         }
 
-        /* 4. Heading (Title) */
-        .login-card h2 {
-            color: #333333;
-            font-size: 24px;
-            margin-bottom: 8px;
-            font-weight: 700;
+        /* Sci-Fi Header Tag */
+        .system-tag {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            color: #00f2fe;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            opacity: 0.8;
         }
 
-        /* Subtitle line */
-        .login-card p.subtitle {
-            color: #777777;
-            font-size: 14px;
+        /* Main Heading */
+        .robotics-card h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffffff;
+            font-size: 20px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px #00f2fe;
             margin-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.3);
+            padding-bottom: 10px;
         }
 
-        /* 5. Input Groups: Inputs ko achhi spacing dene ke liye container */
+        /* 3. Input Groups */
         .input-group {
-            margin-bottom: 18px;
-            text-align: left; /* Input labels ya placeholer align karne ke liye */
+            margin-bottom: 20px;
+            text-align: left;
         }
 
         .input-group label {
             display: block;
             font-size: 13px;
-            color: #555555;
+            color: #00f2fe;
             margin-bottom: 6px;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .input-group input {
-            width: 100%;                           /* Full width input field */
-            padding: 12px 14px;                    /* Andar ki jagah */
-            border: 1px solid #cccccc;             /* Soft Grey Border */
-            border-radius: 8px;                    /* Curved borders for input */
-            font-size: 14px;
-            outline: none;                         /* Default blue glow hatane ke liye */
-            transition: border-color 0.3s;
-        }
-
-        /* Input click hone par glow hone waala effect */
-        .input-group input:focus {
-            border-color: #4f46e5;                 /* Modern Indigo Color */
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-        }
-
-        /* 6. Professional Button */
-        .login-btn {
             width: 100%;
-            padding: 12px;
-            background-color: #4f46e5;             /* Primary Blue/Violet theme */
-            color: #ffffff;                        /* Text color white */
-            border: none;                          /* Border remove */
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;                      /* Cursor change on hover */
-            margin-top: 10px;
-            transition: background 0.3s, transform 0.1s;
+            padding: 12px 15px;
+            background: rgba(0, 15, 30, 0.8);
+            border: 1px solid #00f2fe;
+            color: #ffffff;
+            font-size: 16px;
+            letter-spacing: 1px;
+            outline: none;
+            transition: all 0.3s ease;
         }
 
-        /* Button Hover and Click effect */
-        .login-btn:hover {
-            background-color: #4338ca;            /* Darker Shade on Hover */
+        .input-group input::placeholder {
+            color: rgba(0, 242, 254, 0.4);
         }
 
-        .login-btn:active {
-            transform: scale(0.98);                /* Click feel effect */
+        /* Input Glow on Focus */
+        .input-group input:focus {
+            box-shadow: 0 0 12px #00f2fe;
+            background: rgba(0, 30, 60, 0.9);
         }
 
-        /* 7. JavaScript Result Message */
-        #result {
-            margin-top: 15px;
+        /* 4. Futuristic Authorize Button */
+        .cyber-btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: #00f2fe;
+            border: 2px solid #00f2fe;
+            font-family: 'Orbitron', sans-serif;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 800;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
         }
 
+        .cyber-btn:hover {
+            background: #00f2fe;
+            color: #080c14;
+            box-shadow: 0 0 20px #00f2fe;
+        }
+
+        .cyber-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* 5. Validation Result Display */
+        #result {
+            margin-top: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+            min-height: 20px;
+        }
+       
     </style>
 </head>
 
 <body>
-    <div class="login-card">
+    <div class="robotics-card">
+        <div class="system-tag">system is sctive</div>
         <h2>welcome to my website</h2>
 
         <div class="input-group">
@@ -120,7 +162,7 @@
             <input type="password" id="password" placeholder="password">
         </div>
         <p id="result"></p>
-        <button class="login-btn" onclick="login()">LOGIN</button>
+        <button class="cyber-btn" onclick="login()">LOGIN</button>
     </div>
     <script>
         function login() {

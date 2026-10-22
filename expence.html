@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+</head>
+
+<body>
+    <div>
+        <h2>total expenditure: <span id="total-amount">0</span></h2>
+    </div>
+
+    <form id="expense-form">
+        <input type="text" id="item-name" placeholder="item name">
+
+        <input type="number" id="item-price" placeholder="price">
+
+        <select id="item-category">
+            <option value="Food">Food</option>
+            <option value="Shopping">Shopping</option>
+            <option value="transport">transport</option>
+            <option value="bills">bills</option>
+            <option value="onthes">others</option>
+        </select>
+
+        <button type="submit">add Expense</button>
+    </form>
+
+    <h3>Expense logs</h3>
+    <ul id="expense-list">
+
+    </ul>
+    <script>
+        let form = document.getElementById("expense-from");
+        let itemname = document.getElementById("item-name");
+        let itemprice = document.getElementById("item-price");
+        let itemcategory = document.getElementById("item-category");
+        let expenselist = document.getElementById("expense-list");
+
+        let expenses = JSON.parse(localStorage.getItem('my_expenses')) || [];
+            
+         function expenses() {
+            expenselist.innerHTML = '';
+            let total = 0;
+
+            expenses.forEach((expense, index) => {
+                total += expense.price;
+            })
+         }
+
+
+
+
+         // Elements reference
+// const form = document.getElementById('expense-form');
+// const itemNameInput = document.getElementById('item-name');
+// const itemPriceInput = document.getElementById('item-price');
+// const itemCategoryInput = document.getElementById('item-category');
+// const expenseList = document.getElementById('expense-list');
+// const totalAmountDisplay = document.getElementById('total-amount');
+
+// // LocalStorage se data load karna
+// let expenses = JSON.parse(localStorage.getItem('my_expenses')) || [];
+
+// // App initialize karna
+// function init() {
+//     expenseList.innerHTML = '';
+//     let total = 0;
+
+//     expenses.forEach((expense, index) => {
+//         total += expense.price;
+
+//         // List item banana
+//         const li = document.createElement('li');
+//         li.innerHTML = `
+//             <strong>${expense.name}</strong> - ₹${expense.price} [<em>${expense.category}</em>]
+//             <button onclick="deleteExpense(${index})">Delete</button>
+//         `;
+//         expenseList.appendChild(li);
+//     });
+
+//     // Total Update
+//     totalAmountDisplay.innerText = total;
+// }
+
+// // Naya expense add karna
+// form.addEventListener('submit', function (e) {
+//     e.preventDefault();
+
+//     const name = itemNameInput.value.trim();
+//     const price = parseFloat(itemPriceInput.value);
+//     const category = itemCategoryInput.value;
+
+//     if (name && !isNaN(price)) {
+//         const newExpense = { name, price, category };
+//         expenses.push(newExpense);
+
+//         // LocalStorage update karna
+//         localStorage.setItem('my_expenses', JSON.stringify(expenses));
+
+//         // Form clear karna
+//         itemNameInput.value = '';
+//         itemPriceInput.value = '';
+
+//         // UI refresh karna
+//         init();
+//     }
+// });
+
+// // Expense delete karna
+// function deleteExpense(index) {
+//     expenses.splice(index, 1);
+//     localStorage.setItem('my_expenses', JSON.stringify(expenses));
+//     init();
+// }
+
+// // Page load hone par init run karna
+// init();
+
+    </script>
+
+</body>
+
+</html>

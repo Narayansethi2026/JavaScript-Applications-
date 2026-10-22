@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RANDOOM PASSWORD GENERATOR</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        body {
+            background-color: #0b0f19;
+            background-image: linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 2. Robotics HUD Card Container */
+        .generator-card {
+            background: rgba(13, 22, 38, 0.9);
+            border: 2px solid #00ffcc;
+            padding: 30px;
+            width: 380px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2), inset 0 0 10px rgba(0, 255, 204, 0.1);
+            position: relative;
+        }
+
+        /* Corner Tech Accents */
+        .generator-card::before {
+            content: "[ SYS_SECURE ]";
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #0b0f19;
+            color: #00ffcc;
+            font-size: 11px;
+            padding: 0 5px;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #00ffcc;
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
+        }
+
+        /* 3. Password Display & Copy Box */
+        .display-box {
+            display: flex;
+            background: #05070c;
+            border: 1px solid #00ffcc;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 8px rgba(0, 255, 204, 0.2);
+        }
+
+        .display-box input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            color: #00ffcc;
+            outline: none;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            background: #00ffcc;
+            color: #0b0f19;
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+            transition: 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #00b38f;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* 4. Controls Section */
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .range-container {
+            margin-bottom: 15px;
+        }
+
+        .range-container label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #a0aec0;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .range-container span {
+            color: #00ffcc;
+            font-weight: bold;
+        }
+
+        .range-container input[type="range"] {
+            width: 100%;
+            accent-color: #00ffcc;
+            cursor: pointer;
+        }
+
+        .checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkboxes label {
+            font-size: 14px;
+            color: #cbd5e1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .checkboxes input {
+            accent-color: #00ffcc;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* 5. Cyber Action Button */
+        .generate-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+        }
+
+        .generate-btn:hover {
+            background: #00ffcc;
+            color: #0b0f19;
+            box-shadow: 0 0 15px #00ffcc;
+        }
+
+        .generate-btn:active {
+            transform: scale(0.98);
+        }
+
+        #msg {
+            margin-top: 12px;
+            font-size: 13px;
+            text-align: center;
+            letter-spacing: 1px;
+            min-height: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="generator-card">
+        <h2>password generator</h2>
+
+        <div class="display-box">
+            <input type="text" id="password" placeholder="click generator">
+            <button class="copy-btn" onclick="copyPassword()">copy</button>
+
+        </div>
+
+        <div class="controls">
+            <div class="range-container">
+                <label>password length: <span id="lengthVal">12</span></label>
+                <input type="range" id="length" min="6" max="15" value="12" oninput="updateLength()">
+
+            </div>
+            <div class="checkboxes">
+                <label><input type="checkbox" id="uppercase" checked> Include Uppercase (A-Z)</label>
+                <label><input type="checkbox" id="lowercase" checked> Include Lowercase (a-z)</label>
+                <label><input type="checkbox" id="numbers" checked> Include Numbers (0-9)</label>
+                <label><input type="checkbox" id="symbols" checked> Include Symbols (!@#$)</label>
+            </div>
+        </div>
+        <button  class=" generate-btn" onclick="generatorPassword()">generate password</button>
+        <p id="msg"></p>
+
+        
+    </div>
+    
+</body>
+<script>
+    function updateLength() {
+        let length = document.getElementById("length").value;
+        document.getElementById("lengthVal").innerText = length;
+    }
+
+    function generatorPassword() {
+        let length = document.getElementById("length").value; // 'lenght' ko 'length' kiya
+        let upper = document.getElementById("uppercase").checked; // Sahi id map ki gayi
+        let lower = document.getElementById("lowercase").checked; // Sahi id map ki gayi
+        let nums = document.getElementById("numbers").checked;
+        let syms = document.getElementById("symbols"); // Symbol checkbox select kiya
+        let msg = document.getElementById("msg");
+
+        let chars = "";
+        if (upper) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if (lower) chars += "abcdefghijklmnopqrstuvwxyz";
+        if (nums) chars += "0123456789";
+        // Agar symbols checkbox exist karta hai aur checked hai
+        if (syms && syms.checked) chars += "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+        if (chars === "") {
+            msg.style.color = "#dc2626";
+            msg.innerText = "Kam se kam ek option select karein!";
+            return;
+        }
+
+        let password = "";
+        for (let i = 0; i < length; i++) {
+            // math ki jagah Math (capital M) kiya gaya
+            let randomIndex = Math.floor(Math.random() * chars.length);
+            password += chars[randomIndex]; // 'Password' ko 'password' kiya gaya
+        }
+
+        document.getElementById("password").value = password;
+        msg.innerText = "";
+    }
+     
+    function copyPassword() {
+        let passwordBox = document.getElementById("password");
+        let msg = document.getElementById("msg");
+
+        // PasswordBox ko passwordBox (chota p) kiya gaya
+        if (passwordBox.value === "") {
+            msg.style.color = "#dc2626";
+            msg.innerText = "Pehle password generate karein!";
+            return;
+        }
+
+        navigator.clipboard.writeText(passwordBox.value);
+
+        msg.style.color = "#16a34a";
+        msg.innerText = "Password copied to clipboard!";
+    }
+
+    
+</script>
+
+</html>
