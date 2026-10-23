@@ -6,6 +6,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
 </head>
+<style>
+    /* Google Tech Font */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+body {
+    background-color: #0b0f19;
+    color: #00e5ff;
+    font-family: 'Share Tech Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Headings Styling */
+h2, h3 {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+    letter-spacing: 1px;
+}
+
+/* Form Box */
+form {
+    background: #111827;
+    border: 1px solid #00e5ff;
+    padding: 20px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 320px;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+}
+
+/* Inputs and Select Dropdown */
+input, select {
+    background: #0b0f19;
+    border: 1px solid #00e5ff;
+    color: #00e5ff;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Share Tech Mono', monospace;
+    outline: none;
+    font-size: 14px;
+}
+
+input:focus, select:focus {
+    border-color: #ff0055;
+    box-shadow: 0 0 8px rgba(255, 0, 85, 0.4);
+}
+
+/* Submit Button */
+button {
+    background: #00e5ff;
+    color: #0b0f19;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    transition: 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background: #ff0055;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 0, 85, 0.6);
+}
+
+/* Expense List Container */
+ul {
+    list-style: none;
+    padding: 0;
+    width: 320px;
+}
+
+/* List Item Card */
+li {
+    background: #111827;
+    border: 1px solid #1a233a;
+    border-left: 3px solid #00e5ff;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+/* Delete Button inside List */
+li button {
+    background: transparent;
+    color: #ff0055;
+    border: 1px solid #ff0055;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 3px;
+}
+
+li button:hover {
+    background: #ff0055;
+    color: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 0, 85, 0.6);
+}
+</style>
 
 <body>
     <div>
@@ -22,7 +135,9 @@
             <option value="Shopping">Shopping</option>
             <option value="transport">transport</option>
             <option value="bills">bills</option>
-            <option value="onthes">others</option>
+            <option value="entertainment">entertainment</option>
+            <option value="health & fitness">health & fitness</option>
+            <option value="rent & Housing">Rent & Housing</option>
         </select>
 
         <button type="submit">add Expense</button>
@@ -33,91 +148,71 @@
 
     </ul>
     <script>
-        let form = document.getElementById("expense-from");
-        let itemname = document.getElementById("item-name");
-        let itemprice = document.getElementById("item-price");
-        let itemcategory = document.getElementById("item-category");
-        let expenselist = document.getElementById("expense-list");
 
-        let expenses = JSON.parse(localStorage.getItem('my_expenses')) || [];
-            
-         function expenses() {
-            expenselist.innerHTML = '';
-            let total = 0;
+const form = document.getElementById('expense-form');
+const itemNameInput = document.getElementById('item-name');
+const itemPriceInput = document.getElementById('item-price');
+const itemCategoryInput = document.getElementById('item-category');
+const expenseList = document.getElementById('expense-list');
+const totalAmountDisplay = document.getElementById('total-amount');
 
-            expenses.forEach((expense, index) => {
-                total += expense.price;
-            })
-         }
+// LocalStorage se data load karna
+let expenses = JSON.parse(localStorage.getItem('my_expenses')) || [];
 
+// App initialize karna
+function init() {
+    expenseList.innerHTML = '';
+    let total = 0;
 
+    expenses.forEach((expense, index) => {
+        total += expense.price;
 
+        // List item banana
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>${expense.name}</strong> - ₹${expense.price} [<em>${expense.category}</em>]
+            <button onclick="deleteExpense(${index})">Delete</button>
+        `;
+        expenseList.appendChild(li);
+    });
 
-         // Elements reference
-// const form = document.getElementById('expense-form');
-// const itemNameInput = document.getElementById('item-name');
-// const itemPriceInput = document.getElementById('item-price');
-// const itemCategoryInput = document.getElementById('item-category');
-// const expenseList = document.getElementById('expense-list');
-// const totalAmountDisplay = document.getElementById('total-amount');
+    // Total Update
+    totalAmountDisplay.innerText = total;
+}
 
-// // LocalStorage se data load karna
-// let expenses = JSON.parse(localStorage.getItem('my_expenses')) || [];
+// Naya expense add karna
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-// // App initialize karna
-// function init() {
-//     expenseList.innerHTML = '';
-//     let total = 0;
+    const name = itemNameInput.value.trim();
+    const price = parseFloat(itemPriceInput.value);
+    const category = itemCategoryInput.value;
 
-//     expenses.forEach((expense, index) => {
-//         total += expense.price;
+    if (name && !isNaN(price)) {
+        const newExpense = { name, price, category };
+        expenses.push(newExpense);
 
-//         // List item banana
-//         const li = document.createElement('li');
-//         li.innerHTML = `
-//             <strong>${expense.name}</strong> - ₹${expense.price} [<em>${expense.category}</em>]
-//             <button onclick="deleteExpense(${index})">Delete</button>
-//         `;
-//         expenseList.appendChild(li);
-//     });
+        // LocalStorage update karna
+        localStorage.setItem('my_expenses', JSON.stringify(expenses));
 
-//     // Total Update
-//     totalAmountDisplay.innerText = total;
-// }
+        // Form clear karna
+        itemNameInput.value = '';
+        itemPriceInput.value = '';
 
-// // Naya expense add karna
-// form.addEventListener('submit', function (e) {
-//     e.preventDefault();
+        // UI refresh karna
+        init();
+    }
+});
 
-//     const name = itemNameInput.value.trim();
-//     const price = parseFloat(itemPriceInput.value);
-//     const category = itemCategoryInput.value;
+// Expense delete karna
+function deleteExpense(index) {
+    expenses.splice(index, 1);
+    localStorage.setItem('my_expenses', JSON.stringify(expenses));
+    init();
+}
 
-//     if (name && !isNaN(price)) {
-//         const newExpense = { name, price, category };
-//         expenses.push(newExpense);
-
-//         // LocalStorage update karna
-//         localStorage.setItem('my_expenses', JSON.stringify(expenses));
-
-//         // Form clear karna
-//         itemNameInput.value = '';
-//         itemPriceInput.value = '';
-
-//         // UI refresh karna
-//         init();
-//     }
-// });
-
-// // Expense delete karna
-// function deleteExpense(index) {
-//     expenses.splice(index, 1);
-//     localStorage.setItem('my_expenses', JSON.stringify(expenses));
-//     init();
-// }
-
-// // Page load hone par init run karna
-// init();
+// Page load hone par init run karna
+init();
 
     </script>
 
