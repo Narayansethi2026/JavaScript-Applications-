@@ -5,32 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One Hub - Endless Possibilities</title>
     <style>
-        /* === DEFAULT THEME (Dark Blue & Cream) === */
+      */
         :root {
-            --nav-bg: #050C28;         /* Navbar ka alag dark color */
-            --bg-color: #010736;       /* Deepest Navy */
-            --card-bg: #0D1C42;        /* Slightly lighter Navy */
-            --card-border: #22396F;    /* Royal Blue border */
-            --accent: #FCF1D0;         /* Cream/Beige accent & text */
-            --accent-hover: #FFFFFF;   /* Pure white on hover */
+            --nav-bg: #050C28;         
+            --bg-color: #010736;       
+            --card-border: #22396F;    
+            --accent: #FCF1D0;         
+            --accent-hover: #FFFFFF;  
             --text-main: #FCF1D0;
-            --text-muted: #A0B2D8;     /* Light blue-grey for muted text */
-            --icon-bg: #22396F;        /* Icon background */
-            --btn-text: #010736;       /* Text color on cream buttons */
+            --text-muted: #A0B2D8;    
+            --icon-bg: #22396F;        
+            --btn-text: #010736;       
         }
 
-        /* === LIGHT MODE OVERRIDES === */
+      
         body.light-mode {
             --nav-bg: #FFFFFF;
-            --bg-color: #FCF1D0;       /* Cream Background */
-            --card-bg: #FFFFFF;        /* White Cards */
-            --card-border: #E6D8B8;    /* Soft beige border */
-            --accent: #0D1C42;         /* Dark blue text */
+            --bg-color: #FCF1D0;      
+            --card-bg: #FFFFFF;       
+            --card-border: #E6D8B8;    
+            --accent: #0D1C42;        
             --accent-hover: #010736;
-            --text-main: #0D1C42;      /* Dark text */
-            --text-muted: #4A5B7E;     /* Muted dark blue */
-            --icon-bg: #F0E6D0;        /* Soft cream icon bg */
-            --btn-text: #FCF1D0;       /* Text color on dark buttons */
+            --text-main: #0D1C42;      
+            --text-muted: #4A5B7E;    
+            --icon-bg: #F0E6D0;       
+            --btn-text: #FCF1D0;       
         }
 
         * {
@@ -48,7 +47,7 @@
             scroll-behavior: smooth;
         }
 
-        /* === NAVBAR === */
+        
         nav {
             display: flex;
             justify-content: space-between;
@@ -128,8 +127,6 @@
             margin-bottom: 30px;
             max-width: 650px;
         }
-
-        /* === BUTTON === */
         .btn-primary {
             background-color: var(--accent);
             color: var(--btn-text);
@@ -150,7 +147,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* === PROJECTS SECTION === */
+        
         .projects-section {
             max-width: 1000px;
             margin: 0 auto 80px;
@@ -171,7 +168,7 @@
             color: var(--accent);
         }
 
-        /* === GRID & CARDS === */
+       
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -225,7 +222,7 @@
         }
         .card:hover .card-arrow { color: var(--accent); }
 
-        /* === ABOUT & CONTACT === */
+        
         .about-section { max-width: 1000px; margin: 0 auto 80px; padding: 0 20px; }
         .about-section h2 { font-size: 1.5rem; margin-bottom: 15px; color: var(--accent); }
         .about-section p { color: var(--text-muted); max-width: 700px; font-size: 0.95rem; }
@@ -257,7 +254,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
+   
     <nav>
         <div class="logo">
             <span class="logo-icon"></span> MyProjects
@@ -274,28 +271,27 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+  
     <section class="hero" id="home">
         <h1>One Hub,<br><span>Endless Possibilities</span></h1>
         <p>Explore a growing collection of web apps, productivity tools, and creative projects — all built with HTML, CSS, and JavaScript.</p>
         <button class="btn-primary" onclick="showProjects(event)">Get Started &rarr;</button>
     </section>
 
-    <!-- PROJECTS SECTION -->
+    
     <section class="projects-section" id="projects">
         <h2>Explore Apps</h2>
         <div class="grid" id="projects-grid">
-            <!-- Cards JS se inject honge -->
+           
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
+   
     <section class="about-section" id="about">
         <h2>About My Projects</h2>
         <p>This is my all-in-one portfolio hub. Built to showcase my skills, mini-apps, and tools developed using JavaScript, HTML, and CSS. All projects are live and fully functional.</p>
     </section>
 
-    <!-- CONTACT SECTION -->
     <section class="contact-section" id="contact">
         <h2>Get In Touch</h2>
         <p>Have questions or feedback? I'd love to hear from you.</p>
@@ -315,7 +311,7 @@
             { icon: "🧮", title: "Calculator", desc: "Perform basic and advanced calculations.", link: "calculator.html" }
         ];
 
-        // Render Projects
+    
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
             grid.innerHTML = projects.map(proj => `
@@ -330,7 +326,6 @@
             `).join('');
         }
 
-        // Show Projects & Smooth Scroll
         function showProjects(event) {
             if(event) event.preventDefault(); 
             const projectsSection = document.getElementById('projects');
@@ -346,14 +341,14 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Theme Toggle Logic
+     
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('theme-btn');
             
             body.classList.toggle('light-mode');
             
-            // Button text change
+         
             if(body.classList.contains('light-mode')) {
                 btn.innerHTML = '☀️ Light';
             } else {
