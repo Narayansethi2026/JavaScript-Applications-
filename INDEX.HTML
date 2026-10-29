@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Hub - Endless Possibilities</title>
+    <style>
+        /* === DEFAULT THEME (Dark Blue & Cream) === */
+        :root {
+            --nav-bg: #050C28;         /* Navbar ka alag dark color */
+            --bg-color: #010736;       /* Deepest Navy */
+            --card-bg: #0D1C42;        /* Slightly lighter Navy */
+            --card-border: #22396F;    /* Royal Blue border */
+            --accent: #FCF1D0;         /* Cream/Beige accent & text */
+            --accent-hover: #FFFFFF;   /* Pure white on hover */
+            --text-main: #FCF1D0;
+            --text-muted: #A0B2D8;     /* Light blue-grey for muted text */
+            --icon-bg: #22396F;        /* Icon background */
+            --btn-text: #010736;       /* Text color on cream buttons */
+        }
+
+        /* === LIGHT MODE OVERRIDES === */
+        body.light-mode {
+            --nav-bg: #FFFFFF;
+            --bg-color: #FCF1D0;       /* Cream Background */
+            --card-bg: #FFFFFF;        /* White Cards */
+            --card-border: #E6D8B8;    /* Soft beige border */
+            --accent: #0D1C42;         /* Dark blue text */
+            --accent-hover: #010736;
+            --text-main: #0D1C42;      /* Dark text */
+            --text-muted: #4A5B7E;     /* Muted dark blue */
+            --icon-bg: #F0E6D0;        /* Soft cream icon bg */
+            --btn-text: #FCF1D0;       /* Text color on dark buttons */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* === NAVBAR === */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background-color: var(--nav-bg); /* Navbar ka color alag hai */
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+        }
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Dark Mode Toggle Button */
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            max-width: 1000px;
+            margin: 60px auto 40px;
+            padding: 0 20px;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            color: var(--accent);
+        }
+        .hero h1 span { 
+            color: var(--text-muted);
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 650px;
+        }
+
+        /* === BUTTON === */
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--btn-text);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* === PROJECTS SECTION === */
+        .projects-section {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+        }
+        .projects-section.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .projects-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+        }
+
+        /* === GRID & CARDS === */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+        }
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--icon-bg);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        .card-content { flex: 1; }
+        .card-content h3 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: var(--accent);
+        }
+        .card-content p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+        .card-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+        .card:hover .card-arrow { color: var(--accent); }
+
+        /* === ABOUT & CONTACT === */
+        .about-section { max-width: 1000px; margin: 0 auto 80px; padding: 0 20px; }
+        .about-section h2 { font-size: 1.5rem; margin-bottom: 15px; color: var(--accent); }
+        .about-section p { color: var(--text-muted); max-width: 700px; font-size: 0.95rem; }
+
+        .contact-section {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--card-border);
+            background: var(--nav-bg); /* Contact area navbar se match karega */
+        }
+        .contact-section h2 { font-size: 1.5rem; margin-bottom: 10px; color: var(--accent); }
+        .contact-section p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
+        .btn-contact {
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-contact:hover { 
+            background-color: var(--accent);
+            color: var(--btn-text);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">
+            <span class="logo-icon"></span> MyProjects
+        </div>
+        <div class="nav-links">
+            <a href="#" onclick="scrollToTop(event)">Home</a>
+            <a href="#projects" onclick="showProjects(event)">Apps</a>
+            <a href="#about">About</a>
+            <!-- Dark mode toggle contact ke side me -->
+            <a href="#contact">Contact</a>
+            <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
+                🌙 Dark
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <h1>One Hub,<br><span>Endless Possibilities</span></h1>
+        <p>Explore a growing collection of web apps, productivity tools, and creative projects — all built with HTML, CSS, and JavaScript.</p>
+        <button class="btn-primary" onclick="showProjects(event)">Get Started &rarr;</button>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="projects-section" id="projects">
+        <h2>Explore Apps</h2>
+        <div class="grid" id="projects-grid">
+            <!-- Cards JS se inject honge -->
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about-section" id="about">
+        <h2>About My Projects</h2>
+        <p>This is my all-in-one portfolio hub. Built to showcase my skills, mini-apps, and tools developed using JavaScript, HTML, and CSS. All projects are live and fully functional.</p>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-section" id="contact">
+        <h2>Get In Touch</h2>
+        <p>Have questions or feedback? I'd love to hear from you.</p>
+        <button class="btn-contact">✉️ Contact Us</button>
+    </section>
+
+    
+    <script>
+        
+        const projects = [
+            { icon: "📝", title: "To-Do Manager", desc: "Organize your tasks and get things done.", link: "todo.html" },
+            { icon: "🗒️", title: "Notes App", desc: "Create, edit and organize your notes easily.", link: "notes.html" },
+            { icon: "🌤️", title: "Weather App", desc: "Get real-time weather updates for any city.", link: "weather.html" },
+            { icon: "💬", title: "Daily Quotes", desc: "Get inspired with motivational quotes.", link: "quotes.html" },
+            { icon: "💸", title: "Expense Tracker", desc: "Track your income and expenses.", link: "expense.html" },
+            { icon: "📅", title: "Calendar App", desc: "Manage your schedule and events.", link: "calendar.html" },
+            { icon: "🧮", title: "Calculator", desc: "Perform basic and advanced calculations.", link: "calculator.html" }
+        ];
+
+        // Render Projects
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = projects.map(proj => `
+                <a href="${proj.link}" target="_blank" class="card">
+                    <div class="card-icon">${proj.icon}</div>
+                    <div class="card-content">
+                        <h3>${proj.title}</h3>
+                        <p>${proj.desc}</p>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </a>
+            `).join('');
+        }
+
+        // Show Projects & Smooth Scroll
+        function showProjects(event) {
+            if(event) event.preventDefault(); 
+            const projectsSection = document.getElementById('projects');
+            projectsSection.classList.add('show');
+            
+            const yOffset = -80; 
+            const y = projectsSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+
+        function scrollToTop(event) {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Theme Toggle Logic
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-btn');
+            
+            body.classList.toggle('light-mode');
+            
+            // Button text change
+            if(body.classList.contains('light-mode')) {
+                btn.innerHTML = '☀️ Light';
+            } else {
+                btn.innerHTML = '🌙 Dark';
+            }
+        }
+
+        window.onload = renderProjects;
+    </script>
+</body>
+</html>
