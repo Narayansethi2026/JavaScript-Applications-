@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Expense Tracker</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+    background: #030407;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(21, 88, 140, 0.35), transparent 45%),
+      radial-gradient(circle at 90% 90%, rgba(212, 255, 36, 0.08), transparent 45%);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .total-box {
+    width: 100%;
+    background: linear-gradient(135deg, rgba(21, 88, 140, 0.3), rgba(21, 88, 140, 0.05));
+    border: 1px solid rgba(21, 88, 140, 0.45);
+    border-radius: 18px;
+    padding: 24px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .total-box h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .total-box #total-amount {
+    display: block;
+    font-size: 42px;
+    font-weight: 700;
+    color: #d4ff24;
+    letter-spacing: 1px;
+    text-shadow: 0 0 25px rgba(212, 255, 36, 0.3);
+  }
+
+  .total-box #total-amount::before {
+    content: "₹ ";
+    font-size: 26px;
+    opacity: 0.8;
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  #expense-form {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    backdrop-filter: blur(10px);
+  }
+
+  #expense-form input,
+  #expense-form select {
+    padding: 13px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: 0.25s ease;
+    width: 100%;
+  }
+
+  #expense-form input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  #expense-form input:focus,
+  #expense-form select:focus {
+    border-color: #15588c;
+    background: rgba(21, 88, 140, 0.15);
+    box-shadow: 0 0 0 3px rgba(21, 88, 140, 0.25);
+  }
+
+  #expense-form select option {
+    background: #030407;
+    color: #ffffff;
+  }
+
+  #expense-form button[type="submit"] {
+    padding: 14px;
+    background: linear-gradient(135deg, #15588c, #1e7bc4);
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    margin-top: 4px;
+  }
+
+  #expense-form button[type="submit"]:hover {
+    background: linear-gradient(135deg, #1e7bc4, #15588c);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(21, 88, 140, 0.5);
+  }
+
+  .logs-section {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 24px;
+    min-height: 350px;
+    backdrop-filter: blur(10px);
+  }
+
+  .logs-section h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 16px;
+  }
+
+  #expense-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #expense-list li {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 3px solid #d4ff24;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  #expense-list li .item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  #expense-list li .item-info strong {
+    font-size: 15px;
+    color: #ffffff;
+    word-break: break-word;
+  }
+
+  #expense-list li .item-info em {
+    font-size: 11px;
+    color: #d4ff24;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  #expense-list li .item-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  #expense-list li .item-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #d4ff24;
+    white-space: nowrap;
+  }
+
+  #expense-list li button {
+    background: rgba(255, 77, 77, 0.1);
+    border: 1px solid rgba(255, 77, 77, 0.35);
+    color: #ff6b6b;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  #expense-list li button:hover {
+    background: #ff4d4d;
+    border-color: #ff4d4d;
+    color: #ffffff;
+  }
+
+  #expense-list:empty::after {
+    content: "No expenses yet. Add your first one!";
+    display: block;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+    padding: 30px 20px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+  }
+
+  .back-home {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .back-home a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    transition: 0.25s ease;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .back-home a:hover {
+    color: #d4ff24;
+    border-color: #d4ff24;
+    background: rgba(212, 255, 36, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    .main-grid {
+      grid-template-columns: 1fr;
+    }
+    .logs-section {
+      min-height: auto;
+    }
+  }
+</style>
+</head>
+<body>
+  
+  <div class="container">
+   
+    <div class="total-box">
+      <h2>Total Expenditure</h2>
+      <span id="total-amount">0</span>
+    </div>
+
+    <div class="main-grid">
+     
+      <form id="expense-form">
+        <input type="text" id="item-name" placeholder="Item name" required>
+        <input type="number" id="item-price" placeholder="Price" required step="0.01" min="0">
+        <select id="item-category">
+          <option value="Food">Food</option>
+          <option value="Shopping">Shopping</option>
+          <option value="transport">Transport</option>
+          <option value="bills">Bills</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="health & fitness">Health & Fitness</option>
+          <option value="rent & Housing">Rent & Housing</option>
+        </select>
+        <button type="submit">Add Expense</button>
+      </form>
+
+      <div class="logs-section">
+        <h3>Expense Logs</h3>
+        <ul id="expense-list"></ul>
+      </div>
+
+    </div>
+
+    <div class="back-home">
+      <a href="index.html">&larr; Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('expense-form');
+    const itemNameInput = document.getElementById('item-name');
+    const itemPriceInput = document.getElementById('item-price');
+    const itemCategoryInput = document.getElementById('item-category');
+    const expenseList = document.getElementById('expense-list');
+    const totalAmountDisplay = document.getElementById('total-amount');
+
+    let expenses = JSON.parse(localStorage.getItem('my_expenses')) || [];
+
+    function init() {
+      expenseList.innerHTML = '';
+      let total = 0;
+
+      expenses.forEach((expense, index) => {
+        total += expense.price;
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <div class="item-info">
+            <strong>${expense.name}</strong>
+            <em>${expense.category}</em>
+          </div>
+          <div class="item-right">
+            <span class="item-price">₹${expense.price}</span>
+            <button onclick="deleteExpense(${index})">Delete</button>
+          </div>
+        `;
+        expenseList.appendChild(li);
+      });
+
+      totalAmountDisplay.innerText = total.toFixed(2).replace(/\.00$/, '');
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = itemNameInput.value.trim();
+      const price = parseFloat(itemPriceInput.value);
+      const category = itemCategoryInput.value;
+
+      if (name && !isNaN(price) && price > 0) {
+        const newExpense = { name, price, category };
+        expenses.push(newExpense);
+        localStorage.setItem('my_expenses', JSON.stringify(expenses));
+        
+        itemNameInput.value = '';
+        itemPriceInput.value = '';
+        itemNameInput.focus();
+        
+        init();
+      }
+    });
+
+    function deleteExpense(index) {
+      expenses.splice(index, 1);
+      localStorage.setItem('my_expenses', JSON.stringify(expenses));
+      init();
+    }
+
+    init();
+  </script>
+</body>
+</html>
