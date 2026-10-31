@@ -3,33 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>One Hub - Endless Possibilities</title>
+    <title>TaskMatrix</title>
     <style>
-      */
         :root {
-            --nav-bg: #050C28;         
-            --bg-color: #010736;       
-            --card-border: #22396F;    
-            --accent: #FCF1D0;         
-            --accent-hover: #FFFFFF;  
-            --text-main: #FCF1D0;
-            --text-muted: #A0B2D8;    
-            --icon-bg: #22396F;        
-            --btn-text: #010736;       
+            --nav-bg: #090D16;
+            --bg-color: #090D16;
+            --card-bg: #131C2E;
+            --card-border: #1E293B;
+            --accent: #3B82F6;
+            --accent-hover: #2563EB;
+            --secondary: #06B6D4;
+            --text-main: #F1F5F9;
+            --text-muted: #64748B;
+            --icon-bg: #1E293B;
+            --btn-text: #FFFFFF;
         }
 
-      
         body.light-mode {
             --nav-bg: #FFFFFF;
-            --bg-color: #FCF1D0;      
-            --card-bg: #FFFFFF;       
-            --card-border: #E6D8B8;    
-            --accent: #0D1C42;        
-            --accent-hover: #010736;
-            --text-main: #0D1C42;      
-            --text-muted: #4A5B7E;    
-            --icon-bg: #F0E6D0;       
-            --btn-text: #FCF1D0;       
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --card-border: #E2E8F0;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --secondary: #0891B2;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --icon-bg: #F1F5F9;
+            --btn-text: #FFFFFF;
         }
 
         * {
@@ -47,205 +48,268 @@
             scroll-behavior: smooth;
         }
 
-        
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 8%;
-            background-color: var(--nav-bg); /* Navbar ka color alag hai */
+            background-color: var(--nav-bg);
             border-bottom: 1px solid var(--card-border);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .logo {
+
+        /* .logo {
             font-weight: 700;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--accent);
-        }
+            color: var(--text-main);
+        } */
+         .logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            cursor: pointer;
+
+         }
+         .logo-image{
+            display: block;
+            width: 180px;
+            object-fit: contain;
+            object-position:left center ;
+         }
+
         .logo-icon {
             width: 24px;
             height: 24px;
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
             border-radius: 50%;
         }
+
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
+
         .nav-links a {
             text-decoration: none;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             transition: color 0.2s;
         }
-        .nav-links a:hover { color: var(--accent); }
 
-        /* Dark Mode Toggle Button */
+        .nav-links a:hover { 
+            color: var(--accent); 
+        }
+
         .theme-toggle {
             background: transparent;
             border: 1px solid var(--card-border);
             color: var(--text-main);
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 6px;
             transition: all 0.2s;
         }
+
         .theme-toggle:hover {
             border-color: var(--accent);
+            color: var(--accent);
         }
 
-        /* === HERO SECTION === */
         .hero {
             max-width: 1000px;
-            margin: 60px auto 40px;
+            margin: 80px auto 50px;
             padding: 0 20px;
         }
+
         .hero h1 {
             font-size: 3.5rem;
             line-height: 1.1;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             letter-spacing: -0.5px;
-            color: var(--accent);
+            color: var(--text-main);
         }
+
         .hero h1 span { 
-            color: var(--text-muted);
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
         .hero p {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+            font-size: 1.15rem;
+            margin-bottom: 35px;
             max-width: 650px;
         }
+
         .btn-primary {
             background-color: var(--accent);
             color: var(--btn-text);
             border: none;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 8px;
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
+
         .btn-primary:hover {
             background-color: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
         }
 
-        
         .projects-section {
             max-width: 1000px;
             margin: 0 auto 80px;
             padding: 0 20px;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
             pointer-events: none;
         }
+
         .projects-section.show {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
+
         .projects-section h2 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--text-main);
         }
 
-       
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
+
         .card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 14px;
+            padding: 24px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             text-decoration: none;
             color: inherit;
         }
+
         .card:hover {
             border-color: var(--accent);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            transform: translateY(-3px);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
+
         .card-icon {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             background: var(--icon-bg);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             flex-shrink: 0;
-            color: var(--accent);
         }
+
         .card-content { flex: 1; }
+
         .card-content h3 {
-            font-size: 1rem;
-            margin-bottom: 4px;
-            color: var(--accent);
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+            color: var(--text-main);
+            font-weight: 600;
         }
+
         .card-content p {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            line-height: 1.3;
+            line-height: 1.4;
         }
+
         .card-arrow {
             color: var(--text-muted);
             font-size: 1.2rem;
-            transition: color 0.2s;
+            transition: color 0.2s, transform 0.2s;
         }
-        .card:hover .card-arrow { color: var(--accent); }
 
-        
-        .about-section { max-width: 1000px; margin: 0 auto 80px; padding: 0 20px; }
-        .about-section h2 { font-size: 1.5rem; margin-bottom: 15px; color: var(--accent); }
-        .about-section p { color: var(--text-muted); max-width: 700px; font-size: 0.95rem; }
+        .card:hover .card-arrow { 
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .about-section { 
+            max-width: 1000px; 
+            margin: 0 auto 80px; 
+            padding: 0 20px; 
+        }
+
+        .about-section h2 { 
+            font-size: 1.8rem; 
+            margin-bottom: 15px; 
+            color: var(--text-main); 
+        }
+
+        .about-section p { 
+            color: var(--text-muted); 
+            max-width: 700px; 
+            font-size: 1rem; 
+        }
 
         .contact-section {
             text-align: center;
-            padding: 60px 20px;
+            padding: 70px 20px;
             border-top: 1px solid var(--card-border);
-            background: var(--nav-bg); /* Contact area navbar se match karega */
+            background: var(--nav-bg);
         }
-        .contact-section h2 { font-size: 1.5rem; margin-bottom: 10px; color: var(--accent); }
-        .contact-section p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
+
+        .contact-section h2 { 
+            font-size: 1.8rem; 
+            margin-bottom: 10px; 
+            color: var(--text-main); 
+        }
+
+        .contact-section p { 
+            color: var(--text-muted); 
+            font-size: 1rem; 
+            margin-bottom: 25px; 
+        }
+
         .btn-contact {
             background-color: transparent;
             color: var(--accent);
             border: 1px solid var(--accent);
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
+
         .btn-contact:hover { 
             background-color: var(--accent);
             color: var(--btn-text);
@@ -254,16 +318,15 @@
 </head>
 <body>
 
-   
     <nav>
         <div class="logo">
-            <span class="logo-icon"></span> MyProjects
+            <img src="logo.png.jpeg" alt="TaskMatrix logo" class="logo-image">
+            <!-- <span class="logo-icon"></span> TaskMatrix -->
         </div>
         <div class="nav-links">
             <a href="#" onclick="scrollToTop(event)">Home</a>
             <a href="#projects" onclick="showProjects(event)">Apps</a>
             <a href="#about">About</a>
-            <!-- Dark mode toggle contact ke side me -->
             <a href="#contact">Contact</a>
             <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
                 🌙 Dark
@@ -271,22 +334,18 @@
         </div>
     </nav>
 
-  
     <section class="hero" id="home">
         <h1>One Hub,<br><span>Endless Possibilities</span></h1>
         <p>Explore a growing collection of web apps, productivity tools, and creative projects — all built with HTML, CSS, and JavaScript.</p>
         <button class="btn-primary" onclick="showProjects(event)">Get Started &rarr;</button>
     </section>
 
-    
     <section class="projects-section" id="projects">
         <h2>Explore Apps</h2>
         <div class="grid" id="projects-grid">
-           
         </div>
     </section>
 
-   
     <section class="about-section" id="about">
         <h2>About My Projects</h2>
         <p>This is my all-in-one portfolio hub. Built to showcase my skills, mini-apps, and tools developed using JavaScript, HTML, and CSS. All projects are live and fully functional.</p>
@@ -298,9 +357,7 @@
         <button class="btn-contact">✉️ Contact Us</button>
     </section>
 
-    
     <script>
-        
         const projects = [
             { icon: "📝", title: "To-Do Manager", desc: "Organize your tasks and get things done.", link: "todo.html" },
             { icon: "🗒️", title: "Notes App", desc: "Create, edit and organize your notes easily.", link: "notes.html" },
@@ -308,10 +365,10 @@
             { icon: "💬", title: "Daily Quotes", desc: "Get inspired with motivational quotes.", link: "quotes.html" },
             { icon: "💸", title: "Expense Tracker", desc: "Track your income and expenses.", link: "expense.html" },
             { icon: "📅", title: "Calendar App", desc: "Manage your schedule and events.", link: "calendar.html" },
-            { icon: "🧮", title: "Calculator", desc: "Perform basic and advanced calculations.", link: "calculator.html" }
+            { icon: "🧮", title: "Calculator", desc: "Perform basic and advanced calculations.", link: "calculator.html" },
+            { icon: "🔐", title: "Password Generator", desc: "Generate secure random passwords instantly.", link: "password.html" }
         ];
 
-    
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
             grid.innerHTML = projects.map(proj => `
@@ -331,7 +388,7 @@
             const projectsSection = document.getElementById('projects');
             projectsSection.classList.add('show');
             
-            const yOffset = -80; 
+            const yOffset = -100; 
             const y = projectsSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({ top: y, behavior: 'smooth' });
         }
@@ -341,14 +398,12 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-     
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('theme-btn');
             
             body.classList.toggle('light-mode');
             
-         
             if(body.classList.contains('light-mode')) {
                 btn.innerHTML = '☀️ Light';
             } else {

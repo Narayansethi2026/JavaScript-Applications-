@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic 2-Number Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .calculator-card {
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border: 1px solid #334155;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #38bdf8;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      background-color: #0f172a;
+      color: #00f2fe;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #38bdf8;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      background-color: #38bdf8;
+      color: #0f172a;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: #00f2fe;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    .result-box {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #0f172a;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator-card">
+    <h2>Simple Calculator</h2>
+
+    <div class="input-group">
+      <label for="num1">First Number:</label>
+      <input type="number" id="num1" placeholder="Enter first number">
+    </div>
+
+    <div class="input-group">
+      <label for="num2">Second Number:</label>
+      <input type="number" id="num2" placeholder="Enter second number">
+    </div>
+
+    <div class="btn-grid">
+      <button onclick="calculate('+')">+</button>
+      <button onclick="calculate('-')">-</button>
+      <button onclick="calculate('*')">×</button>
+      <button onclick="calculate('/')">÷</button>
+    </div>
+
+    <div class="result-box" id="result">
+      Result:--
+    </div>
+  </div>
+
+  <script>
+    function calculate(operator) {
+      // Inputs se values get karke numbers me convert kar rahe hain
+      const val1 = document.getElementById('num1').value;
+      const val2 = document.getElementById('num2').value;
+
+      // Validation check
+      if (val1 === '' || val2 === '') {
+        document.getElementById('result').innerText = 'Please enter both numbers!';
+        return;
+      }
+
+      const num1 = parseFloat(val1);
+      const num2 = parseFloat(val2);
+      let output = 0;
+
+      // Operations logic
+      switch (operator) {
+        case '+':
+          output = num1 + num2;
+          break;
+        case '-':
+          output = num1 - num2;
+          break;
+        case '*':
+          output = num1 * num2;
+          break;
+        case '/':
+          if (num2 === 0) {
+            document.getElementById('result').innerText = 'Cannot divide by 0!';
+            return;
+          }
+          output = num1 / num2;
+          break;
+      }
+
+      // Result screen par display kar rahe hain
+      document.getElementById('result').innerText = `Result: ${output}`;
+    }
+  </script>
+
+</body>
+</html>
