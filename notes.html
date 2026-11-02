@@ -1,11 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>notes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Notes App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #38bdf8;
+      margin-bottom: 25px;
+    }
+
+    .note-input-box {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      margin-bottom: 25px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #38bdf8;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      background-color: #38bdf8;
+      color: #0f172a;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: #00f2fe;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* Notes List Section */
+    .notes-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .note-card {
+      background: #1e293b;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .note-card:hover {
+      border-color: #475569;
+    }
+
+    .note-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .note-content {
+      font-size: 14px;
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 12px;
+    }
+
+    .delete-btn {
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: auto;
+      float: right;
+      transition: background 0.2s;
+    }
+
+    .delete-btn:hover {
+      background-color: #dc2626;
+    }
+
+    .empty-msg {
+      text-align: center;
+      color: #64748b;
+      font-style: italic;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h3>work progreess</h3>
+
+  <div class="container">
+    <h2>My Notes App</h2>
+
+ 
+    <div class="note-input-box">
+      <input type="text" id="noteTitle" placeholder="Note Title...">
+      <textarea id="noteContent" placeholder="Write your note here..."></textarea>
+      <button onclick="addNote()">Add Note</button>
+    </div>
+
+  
+    <div class="notes-grid" id="notesContainer">
+   
+    </div>
+  </div>
+
+  <script>
+  
+    document.addEventListener('DOMContentLoaded', displayNotes);
+
+    function getNotes() {
+      const notes = localStorage.getItem('my_notes');
+      return notes ? JSON.parse(notes) : [];
+    }
+
+    function saveNotes(notes) {
+      localStorage.setItem('my_notes', JSON.stringify(notes));
+    }
+
+    function addNote() {
+      const titleInput = document.getElementById('noteTitle');
+      const contentInput = document.getElementById('noteContent');
+
+      const title = titleInput.value.trim();
+      const content = contentInput.value.trim();
+
+      if (title === '' && content === '') {
+        alert('Please enter a title or content for your note!');
+        return;
+      }
+
+      const newNote = {
+        id: Date.now(),
+        title: title || 'Untitled',
+        content: content
+      };
+
+      const notes = getNotes();
+      notes.unshift.call(notes, newNote); // Naya note sabse upar add hoga
+      saveNotes(notes);
+      titleInput.value = '';
+      contentInput.value = '';
+
+      displayNotes();
+    }
+
+    function deleteNote(id) {
+      let notes = getNotes();
+      notes = notes.filter(note => note.id !== id);
+      saveNotes(notes);
+      displayNotes();
+    }
+
+    function displayNotes() {
+      const container = document.getElementById('notesContainer');
+      const notes = getNotes();
+
+      if (notes.length === 0) {
+        container.innerHTML = '<div class="empty-msg">No notes saved yet. Add your first note above!</div>';
+        return;
+      }
+
+      let html = '';
+      notes.forEach(note => {
+        html += `
+          <div class="note-card">
+            <div class="note-title">${escapeHTML(note.title)}</div>
+            <div class="note-content">${escapeHTML(note.content)}</div>
+            <button class="delete-btn" onclick="deleteNote(${note.id})">Delete</button>
+            <div style="clear: both;"></div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+  </script>
+
 </body>
 </html>
